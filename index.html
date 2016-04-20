@@ -1,16 +1,270 @@
 <html>
 <head>
-  <meta charset="utf-8">
-  <script type="text/javascript" src="jquery-2.2.0.min.js" ></script> 
-  <title>Test1</title>
+	<meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+	<title>Calculadora</title>
+	
+	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<!-- INICIO JAVASCRIPT ------------------------------------------------------------------------- -->
+<script  type="text/javascript">
+	
+<!-- ---------------------- -->
+
+
+$(function() {
+
+	var nombre="Antonio Vilches";
+    var fecha = new Date();      
+    var msj;
+    
+
+    if (fecha.getHours() < 7) {
+      msj = "Buenas noches, ";
+    } else if (fecha.getHours() < 12) {
+      msj = "Buenos d&iacute;as, ";
+    } else if (fecha.getHours() < 21) {
+      msj = "Buenas tardes, ";
+    } else {
+      msj = "Buenas noches, ";
+    }
+      
+	$("#bienvenida").html(msj + "bienvenido a la calculadora de " + nombre);
+      
+
+	
+	tmp="";
+	cadena="";
+	control=0;
+	control_opera=0;
+	control_coma=0;
+
+    $("#C").on("click", 
+      function(){
+	  	tmp="";
+		cadena="";
+		control=0;
+	  	$("#caja").val("");
+	  }
+	);
+
+	$('#1,#2,#3,#4,#5,#6,#7,#8,#9,#0').click(function()
+	{
+		if(control==1 && control_coma==0)
+		{
+			control=0;
+	  		tmp="";
+			cadena="";
+	  		$("#caja").val("");
+		}
+
+		var tmp = $(this).val();
+		cadena=cadena + tmp;
+		$('#caja').val(cadena);	
+	});
+
+
+	$('#mas,#menos,#por,#divide').click(function()
+	{
+		if(control_coma==0)
+		{
+			control=0;
+			control_opera=1;
+			var tmp = $(this).val();
+			cadena=cadena + tmp;
+			$('#caja').val(cadena);	
+		}
+	});
+
+
+	$('#entero').click(function()
+	{
+		if(cadena!="" && control_coma==0)
+		{
+			cadena=eval(cadena);
+			if(cadena<0)
+				cadena=Math.ceil(cadena);
+			else
+				cadena=Math.floor(cadena);
+
+			$('#caja').val(cadena);
+			control=1;
+		}
+	});
+
+
+	$('#raiz').click(function()
+	{
+		if(cadena!="" && control_coma==0)
+		{
+			control=1;
+			if(cadena<0 || cadena=="NaN")
+				cadena="ERROR";
+			else
+			{
+				cadena=eval(cadena);
+				cadena=Math.sqrt(cadena);
+			}
+
+			$('#caja').val(cadena);	
+		}
+	});
+
+
+	$('#cuadrado').click(function()
+	{
+		if(cadena!="" && control_coma==0)
+		{
+			control=1;
+			cadena=eval(cadena);
+			cadena=Math.pow(cadena,2);
+			$('#caja').val(cadena);	
+		}
+	});
+
+
+	$('#bits').click(function()
+	{
+		if(cadena!="" && control_coma==0)
+		{
+			control=1;
+			cadena=eval(cadena);
+			cadena=Math.pow(2,cadena);
+			$('#caja').val(cadena);	
+		}
+	});
+
+
+	$('#factorial').click(function()
+	{
+		if(cadena!="" && control_coma==0)
+		{
+			control=1;
+			var factorial = function(n) {
+    			if(n == 0)
+        			return 1
+			else
+       				return n * factorial(n - 1);
+    			}
+			cadena=eval(cadena);
+			cadena=factorial(cadena);
+			$('#caja').val(cadena);	
+		}
+	});
+
+
+	$('#coma').click(function()
+	{
+		if(cadena!="" && control_opera == 0)
+		{
+			control_coma=1;	
+			cadena=cadena + ",";
+			$('#caja').val(cadena);	
+		}
+	});
+
+
+	$('#sumatorio').click(function()
+	{
+		if(control_coma == 1)
+		{
+			control_coma=0;
+			lista=cadena.split(",");
+
+			for(i=0, acc=0; i<lista.length; i++)
+				acc += +lista[i];
+
+			cadena=acc;
+			$('#caja').val(cadena);	
+			control=1;
+			control_coma=0;
+		}
+	});
+
+
+	$('#productorio').click(function()
+	{
+		if(control_coma == 1)
+		{
+			lista=cadena.split(",");
+
+			for(i=0, acc=1; i<lista.length; i++)
+				acc = +lista[i] * acc;
+
+			cadena=acc;
+			$('#caja').val(cadena);	
+			control=1;
+			control_coma=0;
+		}
+	});
+
+
+	$('#igual').click(function()
+	{
+		if(control_coma==0)
+		{
+			cadena=eval(cadena);
+			$('#caja').val(cadena);
+			control=1;
+			control_opera=0;
+		}
+	});
+	
+
+
+
+});
+
+
+</script>
+<!--FIN JAVASCRIPT -------------------------------------------------------------------------------- -->
 </head>
 
 <body>
+<div  id="calculadora">
+<div  class="division1">&nbsp;</div>
 
-<iframe src="rtsp://193.147.254.64:1935/parlamento3/_definst_/parlamento3.stream" 
-scrolling="no" width="660" height="455" frameborder="0">
-</iframe>
- 	
+
+<div  style="text-align: center;">
+	<h2  style="background-color: rgb(255, 255, 153);" id="bienvenida"><span  style="color: rgb(51, 102, 255);">
+	<span  style="font-weight: bold;"></span></h2><hr><br>
+</div>                    
+
+                                        
+
+			
+<div  style="text-align: center;">
+<input type="text" value="" id="caja"><br /><br />
+
+
+
+<input class="btn" type="button" value="1" id="1">
+<input class="btn" type="button" value="2" id="2">
+<input class="btn" type="button" value="3" id="3">
+<input class="btn" type="button" value="+" id="mas"><br />
+<input class="btn" type="button" value="4" id="4">
+<input class="btn" type="button" value="5" id="5">
+<input class="btn" type="button" value="6" id="6">
+<input class="btn" type="button" value="-" id="menos"><br />
+<input class="btn" type="button" value="7" id="7">
+<input class="btn" type="button" value="8" id="8">
+<input class="btn" type="button" value="9" id="9">
+<input class="btn" type="button" value="*" id="por"><br />
+<input class="btn" type="button" value="0" id="0">
+<input class="btn" type="button" value="Int" id="entero">
+<input class="btn" type="button" value="C" id="C">
+<input class="btn" type="button" value="/" id="divide"><br />
+<input class="btn" type="button" value="x^2" id="cuadrado">
+<input class="btn" type="button" value="2^x" id="bits">
+<input class="btn" type="button" value="&radic;" id="raiz">
+<input class="btn" type="button" value="x!" id="factorial"><br />
+<input class="btn" type="button" value="," id="coma">
+<input class="btn" type="button" value="&sum;" id="sumatorio">
+<input class="btn" type="button" value="&prod;" id="productorio">
+<input class="btn" type="button" value="=" id="igual">
+
+</div>
+
+
+
 </body>
-  
 </html>
