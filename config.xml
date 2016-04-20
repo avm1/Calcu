@@ -1,6 +1,6 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="org.mooc.tempMV" version="1.0.0">
-  <name>Calculadora</name>
-  <description>Calculadora</description>
+  <name>Calcu</name>
+  <description>Calcu</description>
   <content src="index.html"/>
   
   <preference name="permissions" value="none"/>
